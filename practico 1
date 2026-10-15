@@ -1,0 +1,70 @@
+    fn impares_pares(&mut self) {
+        if self.dimension < 2 {
+            return;
+        }
+
+        for i in 0..self.dimension {
+            for j in 0..self.dimension - 1 - i {
+                if self.elemento[j] > self.elemento[j + 1] {
+                    let aux = self.elemento[j];
+                    self.elemento[j] = self.elemento[j + 1];
+                    self.elemento[j + 1] = aux;
+                }
+            }
+        }
+
+        let mut res: [u64; MAX] = [0; MAX];
+        let mut k = 0;
+        for i in 0..self.dimension {
+            if self.elemento[i] % 2 == 1 {
+                res[k] = self.elemento[i];
+                k += 1;
+            }
+        }
+        for i in 0..self.dimension {
+            if self.elemento[i] % 2 == 0 {
+                res[k] = self.elemento[i];
+                k += 1;
+            }
+        }
+
+        for i in 0..self.dimension {
+            self.elemento[i] = res[i];
+        }
+    }
+
+    fn adentro_afuera(&mut self) {
+        if self.dimension < 2 {
+            return;
+        }
+
+        for i in 0..self.dimension {
+            for j in 0..self.dimension - 1 - i {
+                if self.elemento[j] > self.elemento[j + 1] {
+                    let aux = self.elemento[j];
+                    self.elemento[j] = self.elemento[j + 1];
+                    self.elemento[j + 1] = aux;
+                }
+            }
+        }
+
+        let mut res: [u64; MAX] = [0; MAX];
+        let centro = self.dimension / 2;
+        let mut izq = centro;
+        let mut der = centro;
+
+        res[centro] = self.elemento[0];
+        for k in 1..self.dimension {
+            if k % 2 == 1 {
+                izq -= 1;
+                res[izq] = self.elemento[k];
+            } else {
+                der += 1;
+                res[der] = self.elemento[k];
+            }
+        }
+
+        for i in 0..self.dimension {
+            self.elemento[i] = res[i];
+        }
+    }
